@@ -5,8 +5,13 @@ const app = express()
 // Define port useage
 const port = 3000
 
+// Include template engine handlebars
+const exphbs = require('express-handlebars')
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
+app.set('view engine', 'handlebars')
+
 app.get('/', (req, res) => {
-  res.send('Testing my node server')
+  res.render('index')
 })
 
 app.listen(port, () => {
