@@ -6,7 +6,7 @@ const app = express()
 const port = 3000
 
 // Add external JSON file / restaurant data
-const restaurant = require('./restaurant.json')
+const restaurantList = require('./restaurant.json')
 
 // Include template engine handlebars
 const exphbs = require('express-handlebars')
@@ -17,9 +17,16 @@ app.set('view engine', 'handlebars')
 app.use(express.static('public'))
 
 app.get('/', (req, res) => {
-  res.render('index', { restaurant: restaurant.results })
+  res.render('index', { restaurant: restaurantList.results })
 
 })
+
+app.get('/restaurants/:id', (req, res) => {
+  // const restaurant = restaurantList.results.find(restaurant => { return req.params.id == restaurant.id })
+  const restaurant = restaurantList.results.find(restaurant => req.params.id === restaurant.id.toString())
+  res.render('show', { restaurant: restaurant })
+})
+
 
 app.listen(port, () => {
   console.log(`Node servering is listening on https://localhost:${port}`)
