@@ -5,6 +5,9 @@ const app = express()
 // Define port useage
 const port = 3000
 
+// Add external JSON file / restaurant data
+const restaurant = require('./restaurant.json')
+
 // Include template engine handlebars
 const exphbs = require('express-handlebars')
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
@@ -14,7 +17,8 @@ app.set('view engine', 'handlebars')
 app.use(express.static('public'))
 
 app.get('/', (req, res) => {
-  res.render('index')
+  res.render('index', { restaurant: restaurant.results[0] })
+
 })
 
 app.listen(port, () => {
