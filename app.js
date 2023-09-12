@@ -18,7 +18,13 @@ app.use(express.static('public'))
 
 app.get('/', (req, res) => {
   res.render('index', { restaurant: restaurantList.results })
+})
 
+app.get('/search', (req, res) => {
+  // use keyword obtained from query string to filter restaurants to provide search results
+  const keyword = req.query.keyword.trim().toLowerCase()
+  const restaurants = restaurantList.results.filter(restaurant => restaurant.name.toLowerCase().includes(keyword))
+  res.render('index', { restaurant: restaurants })
 })
 
 app.get('/restaurants/:id', (req, res) => {
